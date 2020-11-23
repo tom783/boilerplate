@@ -1,5 +1,6 @@
 import * as React from 'react'
 import Container from './index'
+import Rcol from '../Rcol'
 
 export default {
   title: 'layout/container',
@@ -8,9 +9,10 @@ export default {
 
 export const Basic = (args) => (
   <Container {...args}>
-    <div>1</div>
-    <div>2</div>
-    <div>3</div>
+    <Rcol>1</Rcol>
+    <Rcol>2</Rcol>
+    <Rcol>3</Rcol>
+    <Rcol>4</Rcol>
   </Container>
 )
 Basic.args = {}

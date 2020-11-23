@@ -10,6 +10,7 @@ function App() {
         <Rcol>1</Rcol>
         <Rcol>2</Rcol>
         <Rcol>3</Rcol>
+        <Rcol>4</Rcol>
       </Container>
     </div>
   )

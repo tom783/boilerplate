@@ -1,9 +1,15 @@
 import * as React from 'react'
 import styled, { css } from 'styled-components'
+import * as R from 'ramda'
 
 const Wrap = styled.div`
   display: flex;
   flex-wrap: wrap;
+  ${({ gutter, noGutter, column }) =>
+    css`
+      margin: 0 ${noGutter ? 0 : gutter * -1}px;
+      flex-direction: ${column ? 'column' : 'row'};
+    `}
 
   ${({ vertical }) => {
     switch (vertical) {
@@ -50,14 +56,38 @@ const Wrap = styled.div`
   }}
 `
 
+const defaultProps = {
+  gutter: 10,
+  noGutter: false,
+  column: false,
+  equalHeight: false,
+}
+
+export const GridContext = React.createContext({ ...defaultProps })
+
 const Container = ({
   vertical = 'middle',
   horizon = 'middle',
+  gutter = 10,
   ...etcProps
 }) => {
-  const props = { vertical, horizon, ...etcProps }
+  const props = { vertical, horizon, gutter, ...etcProps }
 
-  return <Wrap {...props}>{props.children}</Wrap>
+  return (
+    <GridContext.Consumer>
+      {(value) => {
+        const mergeProps = R.mergeRight(value, props)
+
+        return (
+          <Wrap {...props}>
+            <GridContext.Provider value={{ ...mergeProps }}>
+              {props.children}
+            </GridContext.Provider>
+          </Wrap>
+        )
+      }}
+    </GridContext.Consumer>
+  )
 }
 
 export default Container
